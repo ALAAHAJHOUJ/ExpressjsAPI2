@@ -56,20 +56,32 @@ app.get("/recuperer",async(req,res)=>{
 })
 
 
-app.delete("/supprimer",async(req,res)=>{
-    
-  try {
-     const query="delete from User"
+app.delete("/supprimer/:id",async(req,res)=>{
+   
+     try {
+     
+         const query1=`select * from User where id=${req.params.id}`
 
-     await pool.query(query)
+         const resultat=await pool.query(query1)
+         
+         if(resultat[0].length==0){
+             res.send("aucun utilisateur possede cet ID")
 
-     console.log("suppression avec succes")
+             return 
+         }
 
-     res.send("suppression avec succes")
-  } catch (error) {
-     console.log(error)
-     res.send("une erreur est servenue")
-  }
+         const query2=`delete from User where id=${req.params.id}`
+
+         await pool.query(query2)
+         
+         res.send("good")
+     } catch (error) {
+         console.log(error)
+
+         res.send("une erreur est servenue")
+
+     }
+
 })
 
 
