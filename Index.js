@@ -18,7 +18,7 @@ const pool = mysql.createPool({
 });
 
 
-app.post("/Ajouter",async(req,res)=>{
+app.post("/Ajouter/",async(req,res)=>{
     const body=req.body;
 
     if(!body.name1 && !body.name2) {
@@ -84,5 +84,17 @@ app.delete("/supprimer/:id",async(req,res)=>{
 
 })
 
+
+app.delete("/supprimer1/",async(req,res)=>{
+    try {
+        const query="delete from User"
+
+        await pool.query(query)
+
+        res.send("opération passée avec succes")
+    } catch (error) {
+        res.send("une erreur est servenue")
+    }
+})
 
 app.listen(4000, () => console.log("http://localhost:4000"));
