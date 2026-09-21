@@ -97,4 +97,14 @@ app.delete("/supprimer1/",async(req,res)=>{
     }
 })
 
+
+
+
+app.post("/tester888/",async(req,res)=>{
+    console.log(req.body)
+    const Aux={...req.body,propr:"1111"}
+    res.send(Aux);
+})
+
+
 app.listen(4000, () => console.log("http://localhost:4000"));
