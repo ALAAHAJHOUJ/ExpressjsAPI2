@@ -18,17 +18,20 @@ const pool = mysql.createPool({
 });
 
 
+
+
+
 app.post("/Ajouter/",async(req,res)=>{
     const body=req.body;
 
-    if(!body.name1 && !body.name2) {
+    if(!body.name) {
         res.send("tous les champs sont reduis")
         return 
     }
 
-    const {name1,name2}=body
+    const {name}=body
 
-    const query=`insert into user (name1,name2) values ("${name1}","${name2}")`
+    const query=`insert into User (name) values ("${name}")`
 
     try {
         await pool.query(query)
@@ -42,9 +45,9 @@ app.post("/Ajouter/",async(req,res)=>{
 
 
 
-app.get("/recuperer",async(req,res)=>{
+app.get("/recuperer/",async(req,res)=>{
    try {
-      const [rows]=await pool.query("select * from user")
+      const [rows]=await pool.query("select * from User")
 
       console.log(rows)
 
@@ -104,6 +107,35 @@ app.post("/tester888/",async(req,res)=>{
     console.log(req.body)
     const Aux={...req.body,propr:"1111"}
     res.send(Aux);
+})
+
+
+const tester=(req,res,next)=>{
+    console.log(req.params)
+    if(!req.params.nombre){
+        res.send("ressayer")
+    }else {
+        next()
+    }
+}
+
+
+
+app.get("/getById/:Exemple/:id1",tester,async(req,res)=>{
+   const idUser=req.params.id;
+   const sql=`select * from User where id=${idUser}`;
+   try {
+      const [rows]=await pool.query(sql);
+
+      console.log(rows)
+
+      res.send(rows)
+   } catch (error) {
+      console.log(error)
+      res.send("une erreur est servenue")
+   }
+    
+
 })
 
 
