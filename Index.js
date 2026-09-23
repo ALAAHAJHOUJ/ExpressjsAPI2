@@ -139,4 +139,23 @@ app.get("/getById/:Exemple/:id1",tester,async(req,res)=>{
 })
 
 
+
+app.get("/NombreUsers/",async(req,res)=>{
+    const sql="select count(*) from User"
+
+    try{
+        const [rows]=await pool.query(sql);
+
+        console.log(rows[0])
+
+        res.send(rows[0])
+    }catch(error){
+        console.log(error)
+        res.send("une erreur est servenue")
+    }
+})
+
+
+
+
 app.listen(4000, () => console.log("http://localhost:4000"));
