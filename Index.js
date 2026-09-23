@@ -153,8 +153,23 @@ app.get("/NombreUsers/",async(req,res)=>{
         console.log(error)
         res.send("une erreur est servenue")
     }
-})
+})  
 
+
+app.get("/Moyen/",async(req,res)=>{
+  const sql1="select count(*) from User"
+
+  try {
+     const [rows]=await pool.query(sql1)
+
+     console.log(rows)
+
+     res.send("le nombre d'elements est:"+rows[0]["count(*)"])
+  } catch (error) {
+     console.log(error)
+     res.send("une erreur est servenue")
+  }
+})
 
 
 
