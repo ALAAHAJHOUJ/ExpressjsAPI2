@@ -17,6 +17,13 @@ const db = mysql.createPool({
 app.use(cors())
 app.use(express.json());
 
+app.use((err, req, res, next) => {
+   
+  if (err.type === 'entity.parse.failed') {
+    return res.send("erreur format"); 
+  }
+  next(err);
+});
 
 
 
