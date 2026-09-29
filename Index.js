@@ -135,6 +135,28 @@ app.get("/GetExemples/",async(req,res)=>{
   }
 })
 
+
+app.post("/tester9991/",async(req,res)=>{
+
+   for(let i=1;i<10;i++){
+      try {
+         const sql=`insert into Exemple(propr1,propr2) values("${i}","${i+2}")`
+
+         await db.query(sql)
+
+                      
+      } catch (error) {
+         console.log(error)
+         res.send("une erreur est servenue")
+         return 
+      }
+   }
+
+   res.send("opération passée avec succes !!")
+})
+
+
+
 app.use((req, res) => {
   console.log("hello")
   res.send("aucune route")
